@@ -1,5 +1,6 @@
 package com.rahul.producer.controller;
 
+import java.util.UUID;
 import com.rahul.producer.model.PaymentEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,9 @@ public class PaymentController {
 
     @PostMapping("/pay")
     public String pay() {
-        String orderId = "asdf34ass";
+        String orderId = UUID.randomUUID().toString();
         PaymentEvent event = new PaymentEvent(orderId, 500, "SUCCESS");
-        kafkaTemplate.send("payments", "Rahul", event);
+        kafkaTemplate.send("payments", orderId, event);
         return "Payment event sent for order " + orderId;
     }
 }
