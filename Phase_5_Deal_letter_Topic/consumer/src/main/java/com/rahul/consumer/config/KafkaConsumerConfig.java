@@ -22,6 +22,31 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
+    /*@Bean
+public DefaultErrorHandler errorHandler() {
+
+    // Build producer settings
+    Map<String, Object> configProps = new HashMap<>();
+    configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+    configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+
+    // Build the producer itself
+    ProducerFactory<String, Object> producerFactory = new DefaultKafkaProducerFactory<>(configProps);
+    KafkaTemplate<String, Object> kafkaTemplate = new KafkaTemplate<>(producerFactory);
+
+    // Build the recoverer (sends failed messages to DLT)
+    DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(kafkaTemplate,
+            (record, exception) -> new TopicPartition(record.topic() + ".DLT", record.partition()));
+
+    // Build the retry policy
+    FixedBackOff backOff = new FixedBackOff(1000L, 3L);
+
+    return new DefaultErrorHandler(recoverer, backOff);
+}*/
+    //this below three method dltProducerFactory, dltKafkaTemplate, errorHandler can be combined into one method as shown in above
+    //but just to learning how method can be separated and used directly in the parameters keep the below
+
     @Bean
     public ProducerFactory<String, Object> dltProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -48,9 +73,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PaymentEvent> kafkaListenerContainerFactory(
-            ConsumerFactory<String, PaymentEvent> consumerFactory,
-            DefaultErrorHandler errorHandler) {
+    public ConcurrentKafkaListenerContainerFactory<String, PaymentEvent> kafkaListenerContainerFactory(ConsumerFactory<String, PaymentEvent> consumerFactory, DefaultErrorHandler errorHandler) {
 
         ConcurrentKafkaListenerContainerFactory<String, PaymentEvent> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
