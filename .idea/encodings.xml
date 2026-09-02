@@ -5,5 +5,7 @@
     <file url="file://$PROJECT_DIR$/Phase_1_Simple_app/producer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Phase_3_Partition/consumer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Phase_3_Partition/producer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Phase_5_Deal_letter_Topic/consumer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Phase_5_Deal_letter_Topic/producer/src/main/java" charset="UTF-8" />
   </component>
 </project>
