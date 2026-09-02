@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ConsumerApplication_2" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.rahul.consumer.ConsumerApplication" />
+    <module name="consumer" />
+    <option name="PROGRAM_PARAMETERS" value="--server.port=8083" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.rahul.consumer.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
