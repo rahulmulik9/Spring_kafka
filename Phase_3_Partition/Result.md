@@ -58,7 +58,8 @@ Final split: Consumer 1 gets 2 partitions, Consumer 2 gets 1 partition. With 3 p
 ## Next check
 Send several payments rapidly via `/pay` and watch both consumer consoles — messages should be split between them (not all going to one), since each message's partition is determined by its key's hash.
 
-## Outpu
+## Output
+### Case 1 : Consumers are running
 Messages are splitting into consumer 1 and consumer 2
 Also if you check the kafka status 
 
@@ -77,3 +78,23 @@ CURRENT-OFFSET	How far the notification-service group has read on this partition
 LOG-END-OFFSET	Total messages that exist in this partition — also 50
 LAG	LOG-END-OFFSET - CURRENT-OFFSET — messages that exist but haven't been read yet. 0 means fully caught up.
 ````
+
+---
+### Case 2 : Consumers are stopped
+
+Stop all consumer service
+In this case hit the pay api multiple times so that message get stored.
+As no consumer will read this message, so there will be difference in between read message index and lastly inserted message index
+This is shown as Lag
+````
+C:\kafka_2.13-4.3.1>.\bin\windows\kafka-consumer-groups.bat --describe --group notification-service --bootstrap-server localhost:9092
+2026-09-02T05:34:24.325339900Z main ERROR Reconfiguration failed: No configuration found for '266474c2' at 'null' in 'null'
+
+Consumer group 'notification-service' has no active members.
+
+GROUP                TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+notification-service payments        0          3               11              8               -               -               -
+notification-service payments        1          50              60              10              -               -               -
+notification-service payments        2          3               13              10              -               -               -
+````
+
